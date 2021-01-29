@@ -4,10 +4,17 @@ import json
 from datetime import date
 
 #Program to print orchids and latest watering dates
-with open("orchids.json") as f:
-    data = json.load(f)
+# with open("orchids.json") as f:
+#     data = json.load(f)
 
-for k in data["orchid_details"]:
+def load():
+    with open('orchids.json') as f:
+        orchid_array = json.load(f)
+        return orchid_array
+
+orchid_data = load()
+
+for k in orchid_data["orchid_details"]:
     x = len(k["dates"])
     print(k["name"], " was last watered on ", k["dates"][x-1])
 
@@ -22,10 +29,7 @@ while True: #Program loop
         """Takes user input, appends orchid name to array"""
         new_orchid = input("Enter name of orchid that you would like to add\n")
 
-        with open('orchids.json') as f:
-            data = json.load(f)
-        
-        temp = data["orchid_details"]
+        temp = orchid_data["orchid_details"]
 
         y = {"name": new_orchid,
             "dates": []
@@ -33,7 +37,7 @@ while True: #Program loop
 
         temp.append(y)
         
-        rewrite(data) 
+        rewrite(orchid_data)
         print(new_orchid + " has been added!")
         
     def add_watering():
